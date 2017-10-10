@@ -97,6 +97,22 @@
 #include "stm32f4xx_cec.h"
 #endif /* STM32F446xx */
 
+#include "cpu.h" 
+#include "dwgl_sci.h" 
+#include "dwgl_spi.h" 
+#include "dwgl_global.h"
+#include "dwgl_function.h"
+#include "dwgl_dac.h"
+#include "dwgl_adc.h"
+#include "dwgl_dma.h"
+#include "dwgl_tim.h"
+#include "dwgl_exti.h"
+#include "PM25LQ512FLASH.h"
+#include "dwgl_WB_LCD.h"
+#include "bsp_SysTick.h"
+#include "bsp_led.h"   
+#include "dwgl_tft.h"
+#include "HzLib_65k.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

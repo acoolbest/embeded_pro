@@ -29,7 +29,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
-#include "./usart/bsp_debug_usart.h"
+#include "dwgl_global.h"
+extern void TimingDelay_Decrement(void);
 
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
@@ -137,7 +138,15 @@ void PendSV_Handler(void)
   * @retval None
   */
 void SysTick_Handler(void)
-{}
+{
+	TimingDelay_Decrement();
+	time_sys++;
+	
+	GPIO_ResetBits(LED_PORT, LED_PIN);
+//		GPIO_NegationBits(LED_PORT, LED_PIN);
+	/* 由于没有采用外部触发，所以使用软件触发ADC转换 */ 
+	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+}
 
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
@@ -154,6 +163,14 @@ void DEBUG_USART_IRQHandler(void)
     USART_SendData(DEBUG_USART,ucTemp);    
 	}	 
 }	
+void EXTI4_IRQHandler(void)
+{ 
+  if(EXTI_GetITStatus(EXTI_Line4) != RESET)
+  {	
+    touch_flag=1;
+    EXTI_ClearITPendingBit(EXTI_Line4);
+  }
+}
 	
 /**
   * @}
